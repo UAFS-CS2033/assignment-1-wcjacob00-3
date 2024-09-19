@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -42,20 +42,20 @@ public class Server{
         int content = (int) file.length();
 
         out.printf("HTTP/1.1 200 OK\n");
-        out.printf("Content-Length: %d\n", contentLength);
+        out.printf("Content-Length: %d\n", content);
         out.printf("Content-Type: %s\n\n", contentType);
 
         System.out.printf("HTTP/1.1 200 OK\n");
-        System.out.printf("Content-Length: %d\n", contentLength);
+        System.out.printf("Content-Length: %d\n", content);
         System.out.printf("Content-Type: %s\n\n", contentType);
 
         if(contentType.equals("image/png")){
-            OutputStream out = (clientSocket.getOutputStream());
+            OutputStream out2 = (clientSocket.getOutputStream());
             FileInputStream in = new FileInputStream(file);
             byte[] buffer = new byte[1024];
             int bytesRead;
             while((bytesRead = in.read(buffer)) != -1){
-                out.write(buffer, 0 , bytesRead);
+                out2.write(buffer, 0 , bytesRead);
            }
         } else {
             BufferedReader br = new BufferedReader(new FileReader (file));
